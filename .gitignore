@@ -1,0 +1,38 @@
+# IDE / Editor
+.idea/
+.vscode/
+.obsidian/
+*.iml
+*.iws
+*.ipr
+.settings/
+.project
+.classpath
+.factorypath
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build output
+target/
+build/
+dist/
+out/
+*.class
+*.jar
+*.war
+
+# Logs
+*.log
+logs/
+
+# Environment / Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# WorkBuddy internal
+.workbuddy/
