@@ -220,17 +220,17 @@ public record Result<T>(
 public record PageResult<T>(
     List<T> list,       // 当前页数据
     long total,         // 总记录数
-    int page,           // 当前页码
-    int size,           // 每页条数
-    int totalPages      // 总页数
+    long page,          // 当前页码
+    long size,          // 每页条数
+    long totalPages     // 总页数
 ) {
     public static <T> PageResult<T> of(Page<T> page) {
         return new PageResult<>(
-            page.getContent(),
-            page.getTotalElements(),
-            page.getNumber() + 1,
+            page.getRecords(),
+            page.getTotal(),
+            page.getCurrent(),
             page.getSize(),
-            page.getTotalPages()
+            page.getPages()
         );
     }
 }

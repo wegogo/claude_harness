@@ -46,8 +46,8 @@ CREATE TABLE t_user (
 ```java
 public interface UserMapper extends BaseMapper<User> {
 
-    // 自定义查询：简单 SQL 用注解
-    @Select("SELECT * FROM t_user WHERE status = #{status} AND deleted = 0")
+    // 自定义查询：简单 SQL 用注解（禁止 SELECT *，显式指定字段）
+    @Select("SELECT id, username, email FROM t_user WHERE status = #{status} AND deleted = 0")
     List<User> selectByStatus(@Param("status") Integer status);
 
     // 复杂查询走 XML

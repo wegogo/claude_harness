@@ -128,7 +128,7 @@ void 查询用户_当ID存在时_返回用户信息() {
     // Arrange
     Long userId = 1L;
     User mockUser = new User(userId, "zhangsan", "zhangsan@test.com");
-    when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
+    when(userMapper.selectById(userId)).thenReturn(mockUser);
 
     // Act
     UserVO result = userService.getById(userId);
@@ -137,7 +137,7 @@ void 查询用户_当ID存在时_返回用户信息() {
     assertThat(result).isNotNull();
     assertThat(result.id()).isEqualTo(userId);
     assertThat(result.username()).isEqualTo("zhangsan");
-    verify(userRepository).findById(userId);
+    verify(userMapper).selectById(userId);
 }
 ```
 
@@ -150,12 +150,12 @@ void 查询用户_当ID存在时_返回用户信息() {
 void 创建用户_当邮箱合法时_保存并返回() {
     // given
     UserCreateDTO dto = new UserCreateDTO("lisi", "lisi@test.com", "password123");
-    when(userRepository.existsByUsername("lisi")).thenReturn(false);
-    when(userRepository.save(any(User.class)))
+    when(userMapper.selectCount(any())).thenReturn(0L);
+    when(userMapper.insert(any(User.class)))
         .thenAnswer(inv -> {
             User u = inv.getArgument(0);
             u.setId(1L);
-            return u;
+            return 1;
         });
 
     // when
@@ -164,7 +164,7 @@ void 创建用户_当邮箱合法时_保存并返回() {
     // then
     assertThat(result.id()).isEqualTo(1L);
     assertThat(result.username()).isEqualTo("lisi");
-    verify(userRepository).save(any(User.class));
+    verify(userMapper).insert(any(User.class));
 }
 ```
 
@@ -617,8 +617,8 @@ void 订单状态为待处理或处理中时_允许取消(OrderStatus status) {
 
 ```java
 @Tag("integration")
-@DataJpaTest
-class UserRepositoryTest { }
+@MybatisPlusTest
+class UserMapperTest { }
 
 @Tag("unit")
 @ExtendWith(MockitoExtension.class)
